@@ -5,17 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Player : MonoBehaviour
 {
-    [SerializeField][Range(1, 100)] private float _moveSpeed = 1;
+    [SerializeField][Range(0, 100)] private float _moveSpeed = 1;
     [SerializeField][Range(2, 100)] private float _jumpForce = 2;
     
     private Vector3 _montion;
     private bool isGrounded;
+    private string _input;
     Rigidbody rb;
 
     void Start()
     {
         rb= GetComponent<Rigidbody>();
         _montion = new Vector3(0,2f,0);
+
+#if UNITY_EDITOR
+        _input = "Editor";
+#elif UNITY_STANDALONE_WIN
+        _input = "Windows";
+#endif
     }
 
     private void OnCollisionStay()
@@ -24,10 +31,12 @@ public class Player : MonoBehaviour
     }
 
     void Update()
-    {
+    {        
         transform.Translate(transform.forward * Time.deltaTime * _moveSpeed);
-        float x = Input.GetAxis("Horizontal") * Time.deltaTime * _moveSpeed;
-        transform.position += new Vector3(x,0,0);
+
+        float standaloneX = Input.GetAxis(_input) * Time.deltaTime * _moveSpeed;
+        transform.position += new Vector3(standaloneX, 0, 0);
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded) 
         { 
             Jump(); 

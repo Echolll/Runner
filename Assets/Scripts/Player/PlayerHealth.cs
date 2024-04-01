@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using System;
-using UnityEditor.Experimental.GraphView;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -17,6 +13,11 @@ public class PlayerHealth : MonoBehaviour
         _maxHealth = _healthPoint;
     }
 
+    public int HealthPoint
+    {
+        get { return _healthPoint; }
+    }
+
     public void TakeDamage(int damage)
     {
         _healthPoint = Mathf.Clamp(_healthPoint - damage, 0, _maxHealth);
@@ -24,8 +25,7 @@ public class PlayerHealth : MonoBehaviour
         if(_healthPoint == 0)
         {
             PlayerDeath?.Invoke();
-            Debug.Log("You died!");
-            EditorApplication.isPaused = true;
+            Debug.Log("You died!");                 
         }
         else 
         { 

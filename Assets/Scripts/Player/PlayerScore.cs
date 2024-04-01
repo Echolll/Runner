@@ -1,15 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerScore : MonoBehaviour
 {
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private Text scoreText;
+    [SerializeField] private PlayerHealth _currectPlayer;
+    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private TMP_Text _healthText;
+
+    public int score;
 
     private void Update()
     {
-        scoreText.text = ((int)(playerTransform.position.z / 2)).ToString();
+        score = ((int)(_currectPlayer.gameObject.transform.position.z / 2));
+        _scoreText.text = $"Points:{score}";
+        int health = _currectPlayer.HealthPoint;
+        _healthText.text = $"Health:{health}";
     }
 }

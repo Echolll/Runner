@@ -11,6 +11,11 @@ public class PlayerTriggerHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other == null)
+        {
+            Debug.Log("Не удалось получить коллизию объета после столкновения!");
+        }
+
         if(other.gameObject.TryGetComponent(out Obstacle obstacle))
         {
             _playerHealth.TakeDamage(obstacle.Damage);
